@@ -1,11 +1,12 @@
 /*
  * This is an example RADOS object class built using only the Ceph SDK interface.
  */
-#include "include/rados/objclass.h"
-#include <Python/Python.h>
+#include "/usr/include/rados/objclass.h"
+#include <python2.7/Python.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h> 
+
 
 CLS_VER(1,0)
 CLS_NAME(sdk)
@@ -73,6 +74,7 @@ static int test_coverage_write(cls_method_context_t hctx, bufferlist *in, buffer
 static int test_coverage_replay(cls_method_context_t hctx, bufferlist *in, bufferlist *out)
 {
   CLS_LOG(0, "reading already written object");
+
   uint64_t size;
   // get the size of the object
   int ret = cls_cxx_stat(hctx, &size, NULL);
@@ -115,12 +117,13 @@ static int test_coverage_replay(cls_method_context_t hctx, bufferlist *in, buffe
   ret = cls_cxx_remove(hctx);
   if (ret < 0)
     return ret;
-  
+
   return 0;
 }
 
 //Author: Aniket Kulkarni
 //OpenLambda method
+/*
 static int cls_python_lambdaFunctions(const string &snippet, const char *event[]){
 
   PyObject *obj_data, *pModule, *pName, *output;
@@ -142,11 +145,11 @@ static int cls_python_lambdaFunctions(const string &snippet, const char *event[]
 
   if(pModule!=NULL){
 
-    /*
-      Step 1: read the object data
-      obj_data=readObjDaata(); 
-      How to read object data? I think it is different from reading an object. (test_coverage_replay)
-    */
+    
+    //  Step 1: read the object data
+    //  obj_data=readObjDaata(); 
+    //  How to read object data? I think it is different from reading an object. (test_coverage_replay)
+    
 
     //Step 2: Apply lambda function here.
       //pFunc is a borrowed reference 
@@ -164,7 +167,7 @@ static int cls_python_lambdaFunctions(const string &snippet, const char *event[]
       //How do we write output to the object? How do we call test_coverage_write method?
 
       //Step 4: What should I return here. obj_data or output. Function return type will change according to that. 
-      /*      */
+      
 
   }else{
     printf("lambda_functions.py NOT FOUND!");
@@ -173,13 +176,14 @@ static int cls_python_lambdaFunctions(const string &snippet, const char *event[]
   Py_Finalize();
   
 }
+*/
 
-/*
+
 void __cls_init()
 {
   CLS_LOG(0, "loading cls_sdk");
 
-  /*
+  
   cls_register("sdk", &h_class);
 
   cls_register_cxx_method(h_class, "test_coverage_write",
@@ -191,4 +195,3 @@ void __cls_init()
       test_coverage_replay, &h_test_coverage_replay);
 
 }
-*/

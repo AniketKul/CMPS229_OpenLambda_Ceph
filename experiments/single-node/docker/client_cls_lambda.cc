@@ -1,8 +1,8 @@
 #include <iostream>
 #include <errno.h>
 
-#include "test/librados/test.h"
-#include "gtest/gtest.h"
+#include "test.h"
+#include "/gtest-master/include/gtest/gtest.h"
 
 using namespace librados;
 

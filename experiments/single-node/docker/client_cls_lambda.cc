@@ -1,6 +1,6 @@
 #include <iostream>
 #include <errno.h>
-
+#include "errno.h"
 #include "test.h"
 #include "/gtest-master/include/gtest/gtest.h"
 
@@ -14,7 +14,7 @@ TEST(ClsSDK, TestSDKCoverageWrite) {
   cluster.ioctx_create(pool_name.c_str(), ioctx);
 
   bufferlist in, out;
-  ASSERT_EQ(0, ioctx.exec("myobject", "sdk", "test_coverage_write", in, out));
+  ASSERT_EQ(0, ioctx.exec("myobject", "root", "test_coverage_write", in, out));
 
   ASSERT_EQ(0, destroy_one_pool_pp(pool_name, cluster));
 }
@@ -27,8 +27,8 @@ TEST(ClsSDK, TestSDKCoverageReplay) {
   cluster.ioctx_create(pool_name.c_str(), ioctx);
 
   bufferlist in, out;
-  ASSERT_EQ(0, ioctx.exec("myobject", "sdk", "test_coverage_write", in, out));
-  ASSERT_EQ(0, ioctx.exec("myobject", "sdk", "test_coverage_replay", in, out));
+  ASSERT_EQ(0, ioctx.exec("myobject", "root", "test_coverage_write", in, out));
+  ASSERT_EQ(0, ioctx.exec("myobject", "root", "test_coverage_replay", in, out));
 
   ASSERT_EQ(0, destroy_one_pool_pp(pool_name, cluster));
 }

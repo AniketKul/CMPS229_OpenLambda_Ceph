@@ -2,9 +2,15 @@ FROM ceph/demo:tag-build-master-luminous-ubuntu-16.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+RUN mkdir -p /gtest-master
+
 ADD *.cc /root/
 ADD *.py /root/
 ADD *.h /root/
+COPY gtest-master /gtest-master
+ADD entrypoint.sh /
+
+RUN chmod 777 /entrypoint.sh 
 
 RUN \
 # remove initialization of unused components from demo image
@@ -20,13 +26,25 @@ RUN \
     apt-get install -y python2.7-dev && \
     apt-get install -y vim && \
     apt-get install librados-dev && \
+    apt-get install -y gdb && \
+    apt-get install -y less && \
+    apt-get install -y libgtest-dev && \
+    apt-get install -y make && \
+    apt-get install -y cmake && \
+    apt-get install -y upstart && \
     #cp /usr/lib/librados.so /root/ && \
     mv /root/objclass.h /usr/include/rados/ && \
-    mv /root/cls_lambda_RADOS.cc /usr/include/rados/ && \
+    cp /root/cls_lambda_RADOS.cc /usr/include/rados/ && \
     cd /usr/include/rados/ && \
-    g++ -std=c++11 -c -fpic cls_lambda_RADOS.cc  -o cls_lambda_rados.so && \
+    g++ -std=c++11 -c -fpic cls_lambda_RADOS.cc -o cls_lambda_rados.so && \
     g++ -std=c++11 -shared -L/usr/lib/rados-classes -lrados -lcls_user -lcls_sdk -o libcls_lambda.so cls_lambda_rados.so && \
     mv /usr/include/rados/libcls_lambda.so /usr/lib/rados-classes && \
+    cp /usr/lib/ceph/libceph-common.so /usr/lib/ && \
+    cd /usr/src/gtest && \
+    cmake CMakeLists.txt && \
+    make && \
+    cp *.a /usr/lib && \
+    ldconfig && \
     cd /root 
     #gcc -Wall -o test main.c -librados
     #gcc -o cls_lambda_RADOS cls_lambda_RADOS.cc -librados && \

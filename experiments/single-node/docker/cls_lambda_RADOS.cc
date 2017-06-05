@@ -9,7 +9,7 @@
 
 
 CLS_VER(1,0)
-CLS_NAME(sdk)
+CLS_NAME(lambda)
 
 cls_handle_t h_class;
 cls_method_handle_t h_test_coverage_write;
@@ -52,12 +52,12 @@ static int test_coverage_write(cls_method_context_t hctx, bufferlist *in, buffer
     return ret;
 
   // make some change to the xattr
-  ret = cls_cxx_setxattr(hctx, "foo", &bl);
+  ret = cls_cxx_setxattr(hctx, "lambda1", &bl);
   if (ret < 0)
     return ret;
 
   // make some change to the omap
-  ret = cls_cxx_map_set_val(hctx, "foo", &bl);
+  ret = cls_cxx_map_set_val(hctx, "lambda1", &bl);
   if (ret < 0)
     return ret;
 
@@ -94,7 +94,7 @@ static int test_coverage_replay(cls_method_context_t hctx, bufferlist *in, buffe
   bl.clear();
 
   // read xattr entry
-  ret = cls_cxx_getxattr(hctx, "foo", &bl);
+  ret = cls_cxx_getxattr(hctx, "lambda1", &bl);
   if (ret < 0)
     return ret;
 
@@ -105,7 +105,7 @@ static int test_coverage_replay(cls_method_context_t hctx, bufferlist *in, buffe
   bl.clear();
 
   // read omap entry
-  ret = cls_cxx_map_get_val(hctx, "foo", &bl);
+  ret = cls_cxx_map_get_val(hctx, "lambda1", &bl);
   if (ret < 0)
     return ret;
 
@@ -181,10 +181,10 @@ static int cls_python_lambdaFunctions(const string &snippet, const char *event[]
 
 void __cls_init()
 {
-  CLS_LOG(0, "loading cls_sdk");
+  CLS_LOG(0, "loading class lambda");
 
   
-  cls_register("sdk", &h_class);
+  cls_register("lambda", &h_class);
 
   cls_register_cxx_method(h_class, "test_coverage_write",
       CLS_METHOD_RD|CLS_METHOD_WR,
@@ -195,3 +195,4 @@ void __cls_init()
       test_coverage_replay, &h_test_coverage_replay);
 
 }
+

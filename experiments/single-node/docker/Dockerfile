@@ -8,6 +8,13 @@ ADD *.cc /root/
 ADD *.py /root/
 ADD *.h /root/
 COPY gtest-master /gtest-master
+COPY boost /root/boost
+COPY include /root/include
+COPY common /root/common
+COPY json_spirit /root/json_spirit
+COPY crush /root/crush
+COPY log /root/log
+COPY msg /root/msg
 ADD entrypoint.sh /
 
 RUN chmod 777 /entrypoint.sh 
@@ -30,6 +37,7 @@ RUN \
     apt-get install -y less && \
     apt-get install -y libgtest-dev && \
     apt-get install -y make && \
+    apt-get install -y libboost-all-dev && \
     apt-get install -y cmake && \
     apt-get install -y upstart && \
     #cp /usr/lib/librados.so /root/ && \

@@ -3,6 +3,13 @@
 #include "test.h"
 #include "errno.h"
 
+#include "include/stringify.h"
+#include "common/Formatter.h"
+#include "json_spirit/json_spirit.h"
+#include "common/errno.h"
+#include "common/ceph_context.h"
+#include "common/config.h"
+
 #include <errno.h>
 #include <sstream>
 #include <stdlib.h>

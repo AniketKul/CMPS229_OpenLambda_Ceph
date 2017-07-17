@@ -18,6 +18,8 @@ docker run -d --name=cephdaemon \
 -e CEPH_PUBLIC_NETWORK=$CEPH_PUBLIC_NETWORK \
 openlambda-ceph
 
+#-v /tmp/ceph:/var/lib/ceph \
+
 #docker run -d --name=cephdaemon \
 #  --net=host \
 #  -e MON_IP=$MON_IP \

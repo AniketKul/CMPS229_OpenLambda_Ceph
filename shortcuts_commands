@@ -1,0 +1,68 @@
+docker run -d --name=cephdaemon \
+  --net=host \
+  -e MON_IP=$MON_IP \
+  -e CEPH_PUBLIC_NETWORK=$CEPH_PUBLIC_NETWORK \
+  openlambda-ceph
+
+gcc -std=c++11 -Iusr/include/rados cls_lambda_RADOS.cc -L/usr/lib -lrados -o cls_lambda_RADOS
+
+gcc -std=c++11 -I/usr/include/rados cls_lambda_RADOS.cc -L/usr/lib -lrados -o cls_lambda_RADOS
+
+gcc -std=c++11 cls_lambda_RADOS.cc -L/usr/lib -lrados -o cls_lambda_RADOS
+
+
+/Volumes/DATA/StorageSystems/OpenLambda/CMPS229_OpenLambda_Ceph-master/experiments/single-node/docker
+
+To build docker: docker build -t openlambda-ceph .
+
+*Ceph IRC - 
+https://webchat.oftc.net/?nick=Leo&channels=ceph-devel&prompt=1&uio=MT11bmRlZmluZWQb1
+
+
+Sample Correct: 
+
+g++ -Wall -fpic -c ctest1.cc 
+g++ -shared -o libctest.so ctest1.o 
+g++ -Wall hello.cc -I . -L/root -lctest -o prog 
+./prog 
+
+
+
+------Main Commands for making libcls_lambda.so: --------
+
+g++ -std=c++11 -c -fpic cls_lambda_RADOS.cc -o cls_lambda_rados.so
+g++ -std=c++11 -shared -L/usr/lib/rados-classes -lrados -lcls_user -lcls_sdk -o libcls_lambda.so cls_lambda_rados.so
+
+-----------------------------
+
+------Main Commands for running client by using libcls_lambda.so
+
+g++ -std=c++11 -c -fpic client_cls_lambda.cc -o cephclient
+g++ -std=c++11 -shared -L/usr/lib/rados-classes -lcls_lambda -o cephclient
+
+-----------------------------
+
+g++ -std=c++11 -c -fpic client_cls_lambda.cc -o cephclient.so
+g++ -std=c++11 -shared -L/usr/lib/rados-classes -lcls_lambda -o cephclient
+
+
+g++ -std=c++11 -c -fpic client_cls_lambda.cc 
+g++ -std=c++11 -shared -L/usr/lib/rados-classes -lcls_lambda client_cls_lambda.o -o cephclient 
+
+/Volumes/DATA/StorageSystems/OpenLambda/CMPS229_OpenLambda_Ceph-master/experiments/single-node/docker
+
+
+Client Library:
+
+g++ -std=c++11 -c -fpic client_cls_lambda_new.cc
+
+g++ -std=c++11 -shared -L/usr/lib/rados-classes -lcls_lambda -lrados -lgtest -lgtest_main -lpthread -lceph-common -o libcls_root.so client_cls_lambda_new.o
+
+Final Command:
+
+g++ -std=c++11 client_cls_lambda.cc test.cc -L/usr/lib/rados-classes -lcls_lambda -lrados -lgtest -lgtest_main -lpthread -lceph-common -o cephclient
+	
+
+Hello Class Testing: 
+
+g++ -std=c++11 clienthello.cc test.cc -L/usr/lib/rados-classes -lcls_hello -lrados -lgtest -lgtest_main -lpthread -lceph-common -o cephclient
